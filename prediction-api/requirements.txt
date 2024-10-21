@@ -6,4 +6,3 @@ tensorflow
 numpy==1.26.4
 h5py
 six
-pickle
