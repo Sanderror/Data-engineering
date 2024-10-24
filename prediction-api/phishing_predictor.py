@@ -20,12 +20,12 @@ class PhishingPredictor:
                 model_repo = os.environ['MODEL_REPO']
                 #file_path = os.path.join(model_repo, "model.h5")
                 #self.model = load_model(file_path)
-                with open('model-A1-v3.pkl', 'rb') as file:
+                with open('model-A1.pkl', 'rb') as file:
                     self.model = pickle.load(file)
             except KeyError:
                 print("MODEL_REPO is undefined")
                 #self.model = load_model('model.h5')
-                with open('model-A1-v3.pkl', 'rb') as file:
+                with open('model-A1.pkl', 'rb') as file:
                     self.model = pickle.load(file)
 
         df = pd.read_json(StringIO(json.dumps(prediction_input)), orient='records')
