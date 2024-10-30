@@ -4,6 +4,8 @@ import os
 import logging
 import requests
 from flask import Flask, request, render_template, jsonify
+import urllib
+import re
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -19,20 +21,34 @@ def check_phishing():
         return render_template("input_page.html")
 
     elif request.method == "POST":
+        # Obtaining the link as posted in the input form
+        input_link = str(request.form.get("Link"))
+
+        # obtain the hostname as a string
+        hostname = str(urllib.parse.urlparse(link).hostname)
+
+        # Check if there is a http, if there is, the no_http should be 0, else 1
+        http_list = re.findall("^http", link)
+        if len(http_list) != 0:
+            no_http = 0
+        else:
+            no_http = 1
+
+        # Get the full prediction input using regular expressions
         prediction_input = [
             {
-                "NumDots": int(request.form.get("NumDots")),  # getting input with name = NumDots in HTML form
-                "UrlLength": int(request.form.get("UrlLength")), 
-                "NumDash": int(request.form.get("NumDash")),
-                "NumDashInHostname": int(request.form.get("NumDashInHostname")),
-                "AtSymbol": int(request.form.get("AtSymbol")),
-                "TildeSymbol": int(request.form.get("TildeSymbol")),
-                "NumUnderscore": int(request.form.get("NumUnderscore")),
-                "NumPercent": int(request.form.get("NumPercent")),
-                "NumAmpersand": int(request.form.get("NumAmpersand")),
-                "NumHash": int(request.form.get("NumHash")),
-                "NumNumericChars": int(request.form.get("NumNumericChars")),
-                "NoHttps": int(request.form.get("NoHttps"))
+                "NumDots": int(len(re.findall('\.', input_link))),  # getting input with name = NumDots in HTML form
+                "UrlLength": int(len(input_link)), 
+                "NumDash": int(len(re.findall('-', input_link))),
+                "NumDashInHostname": int(len(re.findall('-', hostname))),
+                "AtSymbol": int(len(re.findall('@', input_link)))),
+                "TildeSymbol": int(len(re.findall('~', input_link))),
+                "NumUnderscore": int(len(re.findall('_', input_link))),
+                "NumPercent": int(len(re.findall('%', input_link))),
+                "NumAmpersand": int(len(re.findall('&', input_link))),
+                "NumHash": int(len(re.findall('#', input_link))),
+                "NumNumericChars": int(len(re.findall('[0-9]', link))),
+                "NoHttps": int(no_http)
             }
         ]
         print("Prediction input: ", prediction_input)
