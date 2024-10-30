@@ -1,13 +1,52 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Likelihood of Phishing link</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Likelihood of Phishing Link</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .likely {
+            color: #dc3545;
+        }
+        .unlikely {
+            color: #28a745;
+        }
+    </style>
 </head>
 <body>
 
-{% if prediction_variable==true %}
-    <p>It is likely that this is a phishing link.</p>
-{% else %}
-    <p>It is unlikely that this is a phishing link.</p>
-{% endif %}
+<div class="container">
+    <p class="result {% if prediction_variable==true %}likely{% else %}unlikely{% endif %}">
+        {% if prediction_variable==true %}
+            It is likely that this is a phishing link.
+        {% else %}
+            It is unlikely that this is a phishing link.
+        {% endif %}
+    </p>
+</div>
+
 </body>
 </html>
