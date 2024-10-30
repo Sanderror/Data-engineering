@@ -41,7 +41,7 @@ def check_phishing():
                 "UrlLength": int(len(input_link)), 
                 "NumDash": int(len(re.findall('-', input_link))),
                 "NumDashInHostname": int(len(re.findall('-', hostname))),
-                "AtSymbol": int(len(re.findall('@', input_link)))),
+                "AtSymbol": int(len(re.findall('@', input_link))),
                 "TildeSymbol": int(len(re.findall('~', input_link))),
                 "NumUnderscore": int(len(re.findall('_', input_link))),
                 "NumPercent": int(len(re.findall('%', input_link))),
