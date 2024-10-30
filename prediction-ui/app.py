@@ -25,10 +25,10 @@ def check_phishing():
         input_link = str(request.form.get("Link"))
 
         # obtain the hostname as a string
-        hostname = str(urllib.parse.urlparse(link).hostname)
+        hostname = str(urllib.parse.urlparse(input_link).hostname)
 
         # Check if there is a http, if there is, the no_http should be 0, else 1
-        http_list = re.findall("^http", link)
+        http_list = re.findall("^http", input_link)
         if len(http_list) != 0:
             no_http = 0
         else:
@@ -47,7 +47,7 @@ def check_phishing():
                 "NumPercent": int(len(re.findall('%', input_link))),
                 "NumAmpersand": int(len(re.findall('&', input_link))),
                 "NumHash": int(len(re.findall('#', input_link))),
-                "NumNumericChars": int(len(re.findall('[0-9]', link))),
+                "NumNumericChars": int(len(re.findall('[0-9]', input_link))),
                 "NoHttps": int(no_http)
             }
         ]
